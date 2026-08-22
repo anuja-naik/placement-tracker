@@ -59,8 +59,8 @@
       "tasks": [
         true,
         true,
-        false,
-        false
+        true,
+        true
       ],
       "min": [
         false,
