@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Road to Amazon / FAANG</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+  :root{
+    --bg-0:#0a0e17; --card:#131b2e; --card-2:#0e1526; --border:#232d45;
+    --text:#e8ecf6; --muted:#8b93a8; --cyan:#22d3ee; --cyan-soft:rgba(34,211,238,.12);
+    --amber:#f5a623; --green:#34d399; --violet:#a78bfa; --red:#f87171;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:radial-gradient(circle at 20% 0%,#132038 0%,var(--bg-0) 45%),var(--bg-0);
+    color:var(--text);padding:18px;min-height:100vh;}
+  .disp{font-family:'Space Grotesk',sans-serif;}
+  .wrap{max-width:680px;margin:0 auto;}
+
+  .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#101a30 0%,#0c1424 60%,#0a1020 100%);
+    border:1px solid var(--border);border-radius:18px;padding:24px 22px;margin-bottom:16px;}
+  .hero::before{content:"";position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;
+    background:radial-gradient(circle,rgba(34,211,238,.25),transparent 70%);}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;position:relative;}
+  .hero h1{font-size:22px;margin:0;letter-spacing:.01em;}
+  .hero .tagline{color:var(--muted);font-size:12.5px;margin-top:5px;font-style:italic;}
+  .icon-btn{background:var(--card-2);border:1px solid var(--border);color:var(--text);border-radius:9px;
+    padding:8px 11px;font-size:13px;cursor:pointer;}
+  .icon-btn:hover{border-color:var(--cyan);}
+  .btn-row{display:flex;gap:8px;}
+  .reset-btn{background:linear-gradient(135deg,var(--cyan),#0ea5c4);color:#04121a;border:none;border-radius:9px;
+    padding:9px 14px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;
+    box-shadow:0 0 16px rgba(34,211,238,.35);}
+  .reset-btn:hover{filter:brightness(1.08);}
+
+  .goal-line{margin-top:16px;background:var(--cyan-soft);border:1px solid rgba(34,211,238,.3);
+    border-radius:10px;padding:10px 12px;font-size:12.5px;color:#cdeff8;}
+  .goal-line b{color:var(--cyan);}
+
+  .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;position:relative;}
+  .stat{background:var(--card-2);border:1px solid var(--border);border-radius:12px;padding:12px 10px;text-align:center;}
+  .stat .icon{font-size:17px;}
+  .stat .val{font-size:19px;font-weight:700;font-family:'Space Grotesk',sans-serif;margin-top:2px;}
+  .stat .lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+  .stat.streak .val{color:var(--amber);}
+  .stat.week .val{color:var(--cyan);}
+  .stat.days .val{color:var(--green);}
+
+  .sync-line{margin-top:12px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:6px;}
+  .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--muted);}
+  .sync-dot.ok{background:var(--green);}
+  .sync-dot.err{background:var(--red);}
+  .sync-dot.busy{background:var(--amber);}
+
+  .quote-card{background:linear-gradient(135deg,rgba(167,139,250,.1),rgba(34,211,238,.06));
+    border:1px solid rgba(167,139,250,.25);border-radius:12px;padding:12px 14px;margin-bottom:16px;
+    font-size:12.5px;color:#dcd8fb;font-style:italic;text-align:center;}
+
+  .tabs{display:flex;overflow-x:auto;gap:6px;margin-bottom:14px;padding-bottom:2px;}
+  .tab{flex:0 0 auto;padding:8px 13px;border-radius:9px;font-size:12.5px;font-weight:600;
+    background:var(--card);border:1px solid var(--border);cursor:pointer;color:var(--muted);white-space:nowrap;}
+  .tab.active{background:linear-gradient(135deg,var(--cyan),#0ea5c4);color:#04121a;border-color:transparent;}
+  .tab .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-left:6px;vertical-align:middle;opacity:0;}
+  .tab.complete .dot{opacity:1;}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px;}
+  .day-title{font-size:16px;font-weight:700;margin:0;font-family:'Space Grotesk',sans-serif;}
+  .mission{font-size:12px;color:var(--muted);margin:4px 0 14px 0;}
+  .mission b{color:var(--violet);}
+
+  .task{display:flex;gap:10px;align-items:center;padding:11px 10px;border-radius:10px;
+    border:1px solid var(--border);margin-bottom:8px;background:var(--card-2);cursor:pointer;}
+  .task:hover{border-color:var(--cyan);}
+  .task input[type=checkbox]{width:19px;height:19px;flex:0 0 auto;accent-color:var(--cyan);cursor:pointer;}
+  .task.checked{background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.35);}
+  .task.checked .task-title{text-decoration:line-through;color:var(--muted);}
+  .task-title{font-size:14px;font-weight:600;}
+
+  .min-day{margin-top:14px;border-top:1px dashed var(--border);padding-top:12px;}
+  .min-day-label{font-size:11px;font-weight:700;color:var(--amber);letter-spacing:.04em;margin-bottom:8px;}
+
+  .section-title{font-size:14px;font-weight:700;margin:0 0 12px 0;font-family:'Space Grotesk',sans-serif;
+    display:flex;align-items:center;gap:6px;}
+  .progress-row{margin-bottom:10px;}
+  .progress-row .row-top{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;}
+  .progress-row .row-top span:first-child{font-weight:600;color:var(--text);}
+  .progress-row .row-top span:last-child{color:var(--muted);}
+  .bar-track{height:8px;border-radius:6px;background:#1b2338;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--cyan),var(--green));
+    box-shadow:0 0 8px rgba(34,211,238,.5);transition:width .3s;}
+  .completion-line{text-align:center;font-size:13px;font-weight:700;color:var(--amber);margin-top:12px;}
+
+  .badge-grid{display:flex;flex-wrap:wrap;gap:8px;}
+  .badge{display:flex;align-items:center;gap:6px;padding:8px 11px;border-radius:20px;font-size:11.5px;font-weight:600;
+    border:1px solid var(--border);background:var(--card-2);color:var(--muted);}
+  .badge.unlocked{color:#04121a;background:linear-gradient(135deg,var(--amber),#fbbf24);border-color:transparent;
+    box-shadow:0 0 10px rgba(245,166,35,.4);}
+
+  .hist-row{display:flex;justify-content:space-between;font-size:12px;padding:8px 0;border-bottom:1px solid var(--border);}
+  .hist-row:last-child{border-bottom:none;}
+  .hist-row .h-pct{color:var(--cyan);font-weight:700;}
+
+  .res-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .res{background:var(--card-2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;
+    text-decoration:none;color:var(--text);display:block;}
+  .res:hover{border-color:var(--cyan);}
+  .res .r-title{font-size:12.5px;font-weight:700;}
+  .res .r-sub{font-size:10.5px;color:var(--muted);margin-top:2px;}
+
+  footer{text-align:center;font-size:10.5px;color:var(--muted);margin-top:6px;padding-bottom:10px;}
+
+  /* Settings modal */
+  .modal-bg{position:fixed;inset:0;background:rgba(5,8,14,.7);display:none;align-items:center;justify-content:center;z-index:50;padding:16px;}
+  .modal-bg.open{display:flex;}
+  .modal{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;max-width:420px;width:100%;}
+  .modal h2{font-size:15px;margin:0 0 4px 0;font-family:'Space Grotesk',sans-serif;}
+  .modal p.hint{font-size:11.5px;color:var(--muted);margin:0 0 14px 0;line-height:1.5;}
+  .field{margin-bottom:10px;}
+  .field label{font-size:11px;color:var(--muted);display:block;margin-bottom:4px;}
+  .field input{width:100%;background:var(--card-2);border:1px solid var(--border);border-radius:8px;
+    padding:8px 10px;color:var(--text);font-size:13px;}
+  .field input:focus{outline:none;border-color:var(--cyan);}
+  .modal-actions{display:flex;gap:8px;margin-top:14px;}
+  .modal-actions button{flex:1;padding:9px;border-radius:8px;border:none;font-size:12.5px;font-weight:700;cursor:pointer;}
+  .btn-save{background:linear-gradient(135deg,var(--cyan),#0ea5c4);color:#04121a;}
+  .btn-cancel{background:var(--card-2);color:var(--muted);border:1px solid var(--border) !important;}
+  .err-box{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.35);color:#fca5a5;
+    border-radius:8px;padding:9px 11px;font-size:11.5px;margin-top:10px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <h1 class="disp">🚀 ROAD TO AMAZON / FAANG</h1>
+        <div class="tagline">Small progress every day. One day, one interview, one offer.</div>
+      </div>
+      <div class="btn-row">
+        <button class="icon-btn" onclick="openSettings()">⚙️</button>
+        <button class="reset-btn" onclick="resetWeek()">Reset Week</button>
+      </div>
+    </div>
+
+    <div class="goal-line">🎯 <b>MAIN GOAL:</b> Crack Amazon / FAANG / a top product-based company — internship or placement.</div>
+
+    <div class="stat-grid">
+      <div class="stat streak"><div class="icon">🔥</div><div class="val" id="statStreak">0</div><div class="lbl">Day Streak</div></div>
+      <div class="stat week"><div class="icon">📈</div><div class="val" id="statWeek">0%</div><div class="lbl">This Week</div></div>
+      <div class="stat days"><div class="icon">🏆</div><div class="val" id="statDays">0/7</div><div class="lbl">Days Done</div></div>
+    </div>
+
+    <div class="sync-line"><div class="sync-dot" id="syncDot"></div><span id="syncText">Not connected to GitHub — click ⚙️ to set up</span></div>
+  </div>
+
+  <div class="quote-card" id="quoteCard"></div>
+
+  <div class="tabs" id="tabs"></div>
+  <div id="dayCard"></div>
+
+  <div class="card">
+    <div class="section-title">📊 This Week's Mission</div>
+    <div id="progressBars"></div>
+    <div class="completion-line" id="completionLine"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">🏅 Achievements</div>
+    <div class="badge-grid" id="badgeGrid"></div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">📜 History (past weeks, from GitHub)</div>
+    <div id="historyList" style="font-size:12px;color:var(--muted);">No completed weeks yet.</div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">🔗 My Resources</div>
+    <div class="res-grid">
+      <a class="res" href="https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2" target="_blank"><div class="r-title">💻 DSA</div><div class="r-sub">Striver A2Z + LeetCode</div></a>
+      <a class="res" href="https://leetcode.com/studyplan/top-sql-50/" target="_blank"><div class="r-title">🗄️ SQL</div><div class="r-sub">LeetCode SQL 50 + MySQL</div></a>
+      <a class="res" href="https://www.indiabix.com/" target="_blank"><div class="r-title">🧮 Aptitude</div><div class="r-sub">Apna College + IndiaBIX</div></a>
+      <a class="res" href="https://www.apnacollege.in/" target="_blank"><div class="r-title">🌐 Web Development</div><div class="r-sub">Apna College Web Dev Course</div></a>
+      <div class="res"><div class="r-title">🤖 AI/ML</div><div class="r-sub">My AI/ML Course</div></div>
+      <div class="res"><div class="r-title">📚 Core CS</div><div class="r-sub">College + interview prep</div></div>
+    </div>
+  </div>
+
+  <footer>Every tick commits to your GitHub repo. "Reset Week" archives this week into history and starts fresh — your streak keeps going.</footer>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h2>Connect your GitHub repo</h2>
+    <p class="hint">Create a repo (can be private), then a <b>fine-grained personal access token</b> scoped only to that repo with <b>Contents: Read and write</b> permission. Paste the details below — they're saved only in this browser and sent straight to GitHub's API, nowhere else.</p>
+    <div class="field"><label>Repo owner (your username)</label><input id="cfgOwner" placeholder="e.g. anuja-naik06"></div>
+    <div class="field"><label>Repo name</label><input id="cfgRepo" placeholder="e.g. placement-tracker"></div>
+    <div class="field"><label>Branch</label><input id="cfgBranch" placeholder="main"></div>
+    <div class="field"><label>File path</label><input id="cfgPath" placeholder="progress.json"></div>
+    <div class="field"><label>Personal access token</label><input id="cfgToken" type="password" placeholder="github_pat_..."></div>
+    <div id="modalErr"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeSettings()">Cancel</button>
+      <button class="btn-save" onclick="saveSettings()">Save & Sync</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+const CATEGORY = {dsa:"DSA", sql:"SQL", apt:"Aptitude", aiml:"AI/ML", web:"Web Dev", proj:"Projects"};
+const MISSIONS = {Monday:"Start the week strong.",Tuesday:"Consistency beats intensity.",Wednesday:"Halfway to a stronger you.",
+  Thursday:"Show up, even on a slow day.",Friday:"Finish the core work before the weekend.",
+  Saturday:"Build something. Ship something.",Sunday:"Revise, review, reset for the week ahead."};
+const QUOTES = {Monday:"Your future self will thank you for today's discipline.",
+  Tuesday:"One solved problem today is one step closer to your offer.",
+  Wednesday:"Don't compete with everyone. Compete with yesterday's version of you.",
+  Thursday:"Amazon/FAANG is the destination. Today's checklist is the journey.",
+  Friday:"Consistency will take you where motivation cannot.",
+  Saturday:"Discipline on a Saturday is what separates offers from almosts.",
+  Sunday:"Reflect, reset, and go again — the streak is built one Sunday at a time."};
+const DATA = {
+  Monday:   { tasks:[{tag:"dsa",label:"DSA"},{tag:"sql",label:"SQL"},{tag:"aiml",label:"AI/ML"}] },
+  Tuesday:  { tasks:[{tag:"dsa",label:"DSA"},{tag:"apt",label:"Aptitude"},{tag:"web",label:"Web Development"}] },
+  Wednesday:{ tasks:[{tag:"dsa",label:"DSA"},{tag:"sql",label:"SQL"},{tag:"aiml",label:"AI/ML"}] },
+  Thursday: { tasks:[{tag:"dsa",label:"DSA"},{tag:"apt",label:"Aptitude"},{tag:"web",label:"Web Development"}] },
+  Friday:   { tasks:[{tag:"dsa",label:"DSA"},{tag:"sql",label:"SQL / DBMS"},{tag:"aiml",label:"AI/ML"}] },
+  Saturday: { tasks:[{tag:"dsa",label:"DSA"},{tag:"apt",label:"Aptitude"},{tag:"sql",label:"SQL"},{tag:"proj",label:"Project"}] },
+  Sunday:   { tasks:[{tag:"dsa",label:"DSA Revision"},{tag:"apt",label:"Aptitude Mock"},{tag:"review",label:"Weekly Review"},{tag:"proj",label:"Project / AI-ML / Web Dev"}] }
+};
+DAYS.forEach(d=>{ DATA[d].min = [{tag:"dsa",label:"DSA"},{tag:DATA[d].tasks[1].tag,label:DATA[d].tasks[1].label}]; });
+
+let weekState = {}, streakData = { streak:0, lastDate:null, totalDaysCompleted:0 }, history = [];
+let activeDay = DAYS[(new Date().getDay()+6)%7];
+let config = { owner:"", repo:"", branch:"main", path:"progress.json", token:"" };
+let fileSha = null;
+let saving = false;
+
+function defaultWeekState(){
+  const s = {};
+  DAYS.forEach(d=>{ s[d] = { tasks: DATA[d].tasks.map(()=>false), min: DATA[d].min.map(()=>false) }; });
+  return s;
+}
+
+/* ---------- local settings (browser-only) ---------- */
+function loadConfig(){
+  try{
+    const raw = localStorage.getItem("faang-gh-config");
+    if(raw) config = {...config, ...JSON.parse(raw)};
+  }catch(e){}
+}
+function persistConfig(){
+  try{ localStorage.setItem("faang-gh-config", JSON.stringify(config)); }catch(e){}
+}
+
+/* ---------- GitHub API ---------- */
+function utf8ToB64(str){
+  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,(m,p)=>String.fromCharCode('0x'+p)));
+}
+function b64ToUtf8(str){
+  return decodeURIComponent(atob(str.replace(/\n/g,'')).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+}
+function ghUrl(){
+  return `https://api.github.com/repos/${config.owner}/${config.repo}/contents/${config.path}`;
+}
+async function ghGetFile(){
+  const res = await fetch(ghUrl()+`?ref=${config.branch}`,{
+    headers:{ "Authorization":`Bearer ${config.token}`, "Accept":"application/vnd.github+json" }
+  });
+  if(res.status===404) return null;
+  if(!res.ok) throw new Error(`GitHub GET failed (${res.status})`);
+  const json = await res.json();
+  fileSha = json.sha;
+  return JSON.parse(b64ToUtf8(json.content));
+}
+async function ghPutFile(dataObj, message){
+  const body = { message, content: utf8ToB64(JSON.stringify(dataObj,null,2)), branch: config.branch };
+  if(fileSha) body.sha = fileSha;
+  const res = await fetch(ghUrl(),{
+    method:"PUT",
+    headers:{ "Authorization":`Bearer ${config.token}`, "Accept":"application/vnd.github+json", "Content-Type":"application/json" },
+    body: JSON.stringify(body)
+  });
+  if(!res.ok){ const t = await res.text(); throw new Error(`GitHub PUT failed (${res.status}): ${t.slice(0,150)}`); }
+  const json = await res.json();
+  fileSha = json.content.sha;
+}
+
+function isConfigured(){ return config.owner && config.repo && config.token; }
+
+function setSync(state, text){
+  document.getElementById('syncDot').className = 'sync-dot ' + (state||'');
+  document.getElementById('syncText').textContent = text;
+}
+
+async function syncToGitHub(message){
+  if(!isConfigured()){ setSync('', 'Not connected to GitHub — click ⚙️ to set up'); return; }
+  saving = true;
+  setSync('busy','Committing to GitHub...');
+  try{
+    await ghPutFile({weekState, streakData, history}, message);
+    setSync('ok', `Synced ✓ ${new Date().toLocaleTimeString()}`);
+  }catch(e){
+    setSync('err', 'Sync failed: ' + e.message);
+  }
+  saving = false;
+}
+
+async function loadFromGitHub(){
+  if(!isConfigured()){ weekState = defaultWeekState(); render(); return; }
+  setSync('busy','Loading from GitHub...');
+  try{
+    const remote = await ghGetFile();
+    if(remote){
+      weekState = remote.weekState || defaultWeekState();
+      streakData = remote.streakData || streakData;
+      history = remote.history || [];
+      setSync('ok','Connected ✓ loaded your progress');
+    } else {
+      weekState = defaultWeekState();
+      await ghPutFile({weekState, streakData, history}, "Initialize progress.json");
+      setSync('ok','Connected ✓ created progress.json');
+    }
+  }catch(e){
+    weekState = defaultWeekState();
+    setSync('err','Could not load: ' + e.message);
+  }
+  render();
+}
+
+/* ---------- settings modal ---------- */
+function openSettings(){
+  document.getElementById('cfgOwner').value = config.owner;
+  document.getElementById('cfgRepo').value = config.repo;
+  document.getElementById('cfgBranch').value = config.branch || "main";
+  document.getElementById('cfgPath').value = config.path || "progress.json";
+  document.getElementById('cfgToken').value = config.token;
+  document.getElementById('modalErr').innerHTML = '';
+  document.getElementById('modalBg').classList.add('open');
+}
+function closeSettings(){ document.getElementById('modalBg').classList.remove('open'); }
+async function saveSettings(){
+  config.owner = document.getElementById('cfgOwner').value.trim();
+  config.repo = document.getElementById('cfgRepo').value.trim();
+  config.branch = document.getElementById('cfgBranch').value.trim() || "main";
+  config.path = document.getElementById('cfgPath').value.trim() || "progress.json";
+  config.token = document.getElementById('cfgToken').value.trim();
+  persistConfig();
+  closeSettings();
+  await loadFromGitHub();
+}
+
+/* ---------- streaks ---------- */
+function todayStr(){ return new Date().toDateString(); }
+function registerDSAActivity(){
+  const today = todayStr();
+  if(streakData.lastDate === today) return;
+  const yesterday = new Date(Date.now()-86400000).toDateString();
+  streakData.streak = (streakData.lastDate === yesterday) ? streakData.streak+1 : 1;
+  streakData.lastDate = today;
+  streakData.totalDaysCompleted += 1;
+}
+
+/* ---------- task interactions ---------- */
+function toggleTask(day, listKey, idx){
+  const newVal = !weekState[day][listKey][idx];
+  weekState[day][listKey][idx] = newVal;
+  const t = DATA[day][listKey][idx];
+  if(t.tag === "dsa" && newVal) registerDSAActivity();
+  render();
+  const doneToday = weekState[day].tasks.filter(v=>v).length;
+  const msg = `${day}: ${newVal?'checked':'unchecked'} ${t.label} (${doneToday}/${DATA[day].tasks.length} today)`;
+  syncToGitHub(msg);
+}
+
+function resetWeek(){
+  const totals = computeCategoryTotals();
+  let done=0,total=0;
+  Object.values(totals).forEach(v=>{done+=v.done;total+=v.total;});
+  const pct = total? Math.round(done/total*100):0;
+  history.unshift({ weekEnded: new Date().toISOString().slice(0,10), completionPct: pct, streak: streakData.streak });
+  history = history.slice(0,20);
+  weekState = defaultWeekState();
+  render();
+  syncToGitHub(`📦 Week complete — ${pct}% (reset for new week)`);
+}
+
+function isDayComplete(day){ return weekState[day].tasks.every(v=>v); }
+
+function taskHTML(t, idx, listKey, day){
+  const checked = weekState[day][listKey][idx];
+  return `<label class="task ${checked?'checked':''}" onclick="event.preventDefault(); toggleTask('${day}','${listKey}',${idx})">
+    <input type="checkbox" ${checked?'checked':''} readonly><div class="task-title">${t.label}</div></label>`;
+}
+function renderTabs(){
+  document.getElementById('tabs').innerHTML = DAYS.map(d=>`
+    <div class="tab ${d===activeDay?'active':''} ${isDayComplete(d)?'complete':''}" onclick="setActive('${d}')">${d.slice(0,3)}<span class="dot"></span></div>`).join('');
+}
+function setActive(day){ activeDay = day; render(); }
+function renderDay(){
+  const day = activeDay, d = DATA[day];
+  document.getElementById('dayCard').innerHTML = `
+    <div class="card">
+      <div class="day-title disp">${day}</div>
+      <div class="mission">🎯 <b>Today's Mission:</b> "${MISSIONS[day]}"</div>
+      ${d.tasks.map((t,i)=>taskHTML(t,i,'tasks',day)).join('')}
+      <div class="min-day"><div class="min-day-label">⚡ MINIMUM DAY (busy day)</div>
+      ${d.min.map((t,i)=>taskHTML(t,i,'min',day)).join('')}</div>
+    </div>`;
+}
+function renderQuote(){ document.getElementById('quoteCard').innerHTML = `"${QUOTES[activeDay]}"`; }
+
+function computeCategoryTotals(){
+  const totals = {};
+  Object.keys(CATEGORY).forEach(tag=>{ totals[tag] = {done:0,total:0}; });
+  DAYS.forEach(day=>{
+    DATA[day].tasks.forEach((t,i)=>{
+      if(!CATEGORY[t.tag]) return;
+      totals[t.tag].total += 1;
+      if(weekState[day].tasks[i]) totals[t.tag].done += 1;
+    });
+  });
+  return totals;
+}
+function renderProgress(){
+  const totals = computeCategoryTotals();
+  let sumDone=0, sumTotal=0;
+  document.getElementById('progressBars').innerHTML = Object.keys(CATEGORY).map(tag=>{
+    const {done,total} = totals[tag]; sumDone+=done; sumTotal+=total;
+    const pct = total? Math.round(done/total*100):0;
+    return `<div class="progress-row"><div class="row-top"><span>${CATEGORY[tag]}</span><span>${done}/${total}</span></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div></div>`;
+  }).join('');
+  const overallPct = sumTotal? Math.round(sumDone/sumTotal*100):0;
+  document.getElementById('completionLine').textContent = `🔥 Weekly Completion: ${overallPct}%`;
+  document.getElementById('statWeek').textContent = overallPct + '%';
+  document.getElementById('statDays').textContent = `${DAYS.filter(isDayComplete).length}/7`;
+  document.getElementById('statStreak').textContent = streakData.streak;
+}
+function renderBadges(){
+  const badges = [
+    {icon:"🔥", label:"3-Day Streak", unlocked: streakData.streak>=3},
+    {icon:"🔥", label:"7-Day DSA Streak", unlocked: streakData.streak>=7},
+    {icon:"🏆", label:"Completed First Week", unlocked: DAYS.every(isDayComplete)},
+    {icon:"🚀", label:"10 Days Consistent", unlocked: streakData.totalDaysCompleted>=10},
+    {icon:"💎", label:"30 Days Consistent", unlocked: streakData.totalDaysCompleted>=30}
+  ];
+  document.getElementById('badgeGrid').innerHTML = badges.map(b=>`<div class="badge ${b.unlocked?'unlocked':''}">${b.icon} ${b.label}</div>`).join('');
+}
+function renderHistory(){
+  const el = document.getElementById('historyList');
+  if(!history.length){ el.textContent = "No completed weeks yet."; return; }
+  el.innerHTML = history.map(h=>`<div class="hist-row"><span>Week ended ${h.weekEnded}</span><span class="h-pct">${h.completionPct}% · 🔥${h.streak}</span></div>`).join('');
+}
+function render(){ renderTabs(); renderDay(); renderQuote(); renderProgress(); renderBadges(); renderHistory(); }
+
+loadConfig();
+render();
+loadFromGitHub();
+</script>
+</body>
+</html>
