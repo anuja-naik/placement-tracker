@@ -1,0 +1,89 @@
+{
+  "weekState": {
+    "Monday": {
+      "tasks": [
+        false,
+        false,
+        false
+      ],
+      "min": [
+        false,
+        false
+      ]
+    },
+    "Tuesday": {
+      "tasks": [
+        false,
+        false,
+        false
+      ],
+      "min": [
+        false,
+        false
+      ]
+    },
+    "Wednesday": {
+      "tasks": [
+        false,
+        false,
+        false
+      ],
+      "min": [
+        false,
+        false
+      ]
+    },
+    "Thursday": {
+      "tasks": [
+        false,
+        false,
+        false
+      ],
+      "min": [
+        false,
+        false
+      ]
+    },
+    "Friday": {
+      "tasks": [
+        false,
+        false,
+        false
+      ],
+      "min": [
+        false,
+        false
+      ]
+    },
+    "Saturday": {
+      "tasks": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "min": [
+        false,
+        false
+      ]
+    },
+    "Sunday": {
+      "tasks": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "min": [
+        false,
+        false
+      ]
+    }
+  },
+  "streakData": {
+    "streak": 0,
+    "lastDate": null,
+    "totalDaysCompleted": 0
+  },
+  "history": []
+}
