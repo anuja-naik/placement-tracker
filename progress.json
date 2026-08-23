@@ -71,7 +71,7 @@
       "tasks": [
         true,
         true,
-        false,
+        true,
         true
       ],
       "min": [
