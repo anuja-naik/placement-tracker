@@ -7,7 +7,7 @@
         false
       ],
       "min": [
-        false,
+        true,
         false
       ]
     },
@@ -81,9 +81,9 @@
     }
   },
   "streakData": {
-    "streak": 2,
-    "lastDate": "Sun Aug 23 2026",
-    "totalDaysCompleted": 2
+    "streak": 3,
+    "lastDate": "Mon Aug 24 2026",
+    "totalDaysCompleted": 3
   },
   "history": []
 }
