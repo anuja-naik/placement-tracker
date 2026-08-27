@@ -40,7 +40,7 @@
         false
       ],
       "min": [
-        false,
+        true,
         false
       ]
     },
