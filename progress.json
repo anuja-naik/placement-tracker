@@ -46,7 +46,7 @@
     },
     "Friday": {
       "tasks": [
-        false,
+        true,
         false,
         false
       ],
@@ -81,9 +81,9 @@
     }
   },
   "streakData": {
-    "streak": 1,
-    "lastDate": "Thu Aug 27 2026",
-    "totalDaysCompleted": 4
+    "streak": 2,
+    "lastDate": "Fri Aug 28 2026",
+    "totalDaysCompleted": 5
   },
   "history": []
 }
