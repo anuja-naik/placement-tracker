@@ -35,18 +35,18 @@
     },
     "Thursday": {
       "tasks": [
-        true,
-        true,
+        false,
+        false,
         false
       ],
       "min": [
-        true,
+        false,
         false
       ]
     },
     "Friday": {
       "tasks": [
-        true,
+        false,
         false,
         false
       ],
@@ -57,22 +57,22 @@
     },
     "Saturday": {
       "tasks": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ],
       "min": [
-        true,
-        true
+        false,
+        false
       ]
     },
     "Sunday": {
       "tasks": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ],
       "min": [
         false,
@@ -85,5 +85,11 @@
     "lastDate": "Fri Aug 28 2026",
     "totalDaysCompleted": 5
   },
-  "history": []
+  "history": [
+    {
+      "weekEnded": "2026-08-29",
+      "completionPct": 45,
+      "streak": 2
+    }
+  ]
 }
