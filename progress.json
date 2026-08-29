@@ -58,8 +58,8 @@
     "Saturday": {
       "tasks": [
         true,
-        false,
-        false,
+        true,
+        true,
         true
       ],
       "min": [
