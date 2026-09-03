@@ -18,7 +18,7 @@
         false
       ],
       "min": [
-        true,
+        false,
         false
       ]
     },
@@ -57,14 +57,14 @@
     },
     "Saturday": {
       "tasks": [
-        true,
-        true,
-        true,
-        true
+        false,
+        false,
+        false,
+        false
       ],
       "min": [
-        true,
-        true
+        false,
+        false
       ]
     },
     "Sunday": {
@@ -86,6 +86,11 @@
     "totalDaysCompleted": 7
   },
   "history": [
+    {
+      "weekEnded": "2026-09-03",
+      "completionPct": 18,
+      "streak": 1
+    },
     {
       "weekEnded": "2026-08-29",
       "completionPct": 45,
