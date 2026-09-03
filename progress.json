@@ -35,13 +35,13 @@
     },
     "Thursday": {
       "tasks": [
-        false,
+        true,
         false,
         false
       ],
       "min": [
         false,
-        true
+        false
       ]
     },
     "Friday": {
@@ -82,8 +82,8 @@
   },
   "streakData": {
     "streak": 1,
-    "lastDate": "Tue Sep 01 2026",
-    "totalDaysCompleted": 7
+    "lastDate": "Thu Sep 03 2026",
+    "totalDaysCompleted": 8
   },
   "history": [
     {
