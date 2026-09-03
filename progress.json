@@ -41,7 +41,7 @@
       ],
       "min": [
         false,
-        false
+        true
       ]
     },
     "Friday": {
